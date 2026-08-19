@@ -6,7 +6,8 @@ module LogicalRender
     sub_genders
     domains
     data
-    data_fields].freeze
+    data_fields
+    assets].freeze
 
     def self.valid?(name)
       RESERVED.include?(name)

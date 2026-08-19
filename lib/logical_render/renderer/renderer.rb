@@ -14,7 +14,8 @@ module LogicalRender
       domains = @data["domains"]
       data = @data["data"]
       data_fields = @data["data_fields"]
-      gender_hiearchy = @data["gender_hierarchy"]
+      gender_hierarchy = @data["gender_hierarchy"]
+      assets = @data["assets"]
 
       ERB.new(@template).result(binding)
     end

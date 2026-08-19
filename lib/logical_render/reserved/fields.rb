@@ -43,7 +43,15 @@ module LogicalRender
         type
         value
         deletable
-      ]
+      ],
+
+      "assets" => %w[
+        id
+        name
+        u_size
+        u_top
+        u_bottom
+        notes]
 
 
     }.freeze

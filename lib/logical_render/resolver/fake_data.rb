@@ -1,7 +1,7 @@
 require "ostruct"
 
 module LogicalRender
-  class DataResolver
+  class FakeData
     def initialize(requirements)
       @requirements = requirements
     end
