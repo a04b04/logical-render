@@ -1,5 +1,7 @@
 require_relative "../parser/template_parser"
 
+
+
 module LogicalRender
   module Commands
     class Render < Dry::CLI::Command
@@ -12,10 +14,11 @@ module LogicalRender
       def call(template:, **)
         template_contents = File.read(template)
         parser = LogicalRender::Parser::TemplateParser.new(template_contents)
-        
+
         puts "Fields: #{parser.fields.inspect}"
         puts "Loops: #{parser.loop_variables.inspect}"
         puts "Requirements: #{parser.requirements.inspect}"
+
 
         requirements = parser.requirements
         resolver = LogicalRender::DataResolver.new(requirements)

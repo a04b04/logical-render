@@ -9,6 +9,7 @@ module LogicalRender
 
     def render
       nodes = @data["nodes"]
+      domains = @data["domains"]
 
       ERB.new(@template).result(binding)
     end

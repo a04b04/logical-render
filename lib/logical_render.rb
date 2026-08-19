@@ -4,6 +4,7 @@ require_relative "logical_render/reserved/resources"
 require_relative "logical_render/parser/template_parser"
 require_relative "logical_render/data_resolver"
 require_relative "logical_render/renderer"
+require_relative "logical_render/reserved/fields"
 
 module LogicalRender
   module CLI
