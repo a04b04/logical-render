@@ -19,6 +19,8 @@ module LogicalRender
         renderer = LogicalRender::Renderer.new(template_contents, data)
         puts renderer.render
 
+        parser.inspect_ast
+
       rescue RuntimeError => e 
         puts "Error: #{e.message}"
       end

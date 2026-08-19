@@ -17,49 +17,22 @@ module LogicalRender
       end
 
       def requirements
-        loops = {}
-        fields = []
-
-        walk(ast) do |node|
-          if node[0] == :method_add_block
-            loop = extract_each_loop(node)
-
-            if loop
-              unless LogicalRender::Resources.valid?(loop[:resource])
-                raise "Unknown resource: #{loop[:resource]}"
-              end
-              loops[loop[:variable]] = loop[:resource]
-            end
-          end
-
-          if node[0] == :call
-            field = extract_field_call(node)
-            fields << field if field
-          end
-        end
-
         result = {}
 
-        fields.each do |field|
-          resource = loops[field[:variable]]
-          next unless resource
-
-          unless LogicalRender::Fields.valid?(resource, field[:field])
-            raise "Unknown field '#{field[:field]}' for resource '#{resource}'"
-          end
-
-          result[resource] ||= []
-          result[resource] << field[:field]
-        end
+        walk(ast, {}, result)
 
         result.transform_values(&:uniq)
       end
 
+      def inspect_ast
+        walk(ast)
+      end
+
       private
 
-      def extract_each_loop(node)
-        resource = node[1][1][1][1]
-        variable = node[2][1][1][1][0][1]
+      def extract_each_loop(ast_node)
+        resource = extract_root_resource(ast_node[1])
+        variable = ast_node[2][1][1][1][0][1]
 
         {
           resource: resource,
@@ -67,11 +40,29 @@ module LogicalRender
         }
       end
 
-      def extract_field_call(node)
-        return unless node[0] == :call
+      def extract_root_resource(ast_node)
+        return unless ast_node.is_a?(Array)
 
-        receiver = node[1]
-        method_name = node[3]
+        if ast_node[0] == :vcall
+          return ast_node.dig(1, 1)
+        end
+
+        if ast_node[0] == :call
+          return extract_root_resource(ast_node[1])
+        end
+
+        if ast_node[0] == :method_add_block
+          return extract_root_resource(ast_node[1])
+        end
+
+        nil
+      end
+
+      def extract_field_call(ast_node)
+        return unless ast_node[0] == :call
+
+        receiver = ast_node[1]
+        method_name = ast_node[3]
 
         return unless receiver&.dig(0) == :var_ref
         return unless receiver&.dig(1, 0) == :@ident
@@ -83,13 +74,48 @@ module LogicalRender
         }
       end
 
-      def walk(node, &block)
-        return unless node.is_a?(Array)
+      def walk(ast_node, scope = {}, requirements = {})
+        return unless ast_node.is_a?(Array)
 
-        yield node
+        if ast_node[0] == :method_add_block
+          loop = extract_each_loop(ast_node)
 
-        node.each do |child|
-          walk(child, &block)
+          if loop
+            resource = loop[:resource]
+            variable = loop[:variable]
+
+            unless LogicalRender::Resources.valid?(resource)
+              raise "Unknown resource: #{resource}"
+            end
+
+            new_scope = scope.merge(variable => resource)
+            block_body = ast_node[2][2]
+
+            walk(block_body, new_scope, requirements)
+
+            return
+          end
+        end
+
+        if ast_node[0] == :call
+          field = extract_field_call(ast_node)
+
+          if field
+            resource = scope[field[:variable]]
+
+            if resource
+              unless LogicalRender::Fields.valid?(resource, field[:field])
+                raise "Unknown field '#{field[:field]}' for resource '#{resource}'"
+              end
+
+              requirements[resource] ||= []
+              requirements[resource] << field[:field]
+            end
+          end
+        end
+
+        ast_node.each do |child|
+          walk(child, scope, requirements)
         end
       end
     end

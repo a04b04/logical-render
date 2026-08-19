@@ -1,7 +1,3 @@
-<% domains.each do |domain| %>
-Domain: <%= domain.name %>
-
-  <% nodes.each do |node| %>
-Node: <%= node.name %>
-  <% end %>
+<% nodes.select { |node| node.name == "node01" }.each do |node| %>
+  <%= node.name %>
 <% end %>
