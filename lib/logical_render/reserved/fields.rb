@@ -15,7 +15,7 @@ module LogicalRender
         domain_id
         name
         data_id
-        index
+        gender_index
       ],
 
       "sub_genders" => %w[

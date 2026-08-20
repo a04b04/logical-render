@@ -1,5 +1,3 @@
-require_relative "../parser/template_parser"
-
 module LogicalRender
   module Commands
     class Render < Dry::CLI::Command
@@ -13,6 +11,9 @@ module LogicalRender
         template_contents = File.read(template)
 
         parser = LogicalRender::Parser::TemplateParser.new(template_contents)
+        # pp parser.ast
+
+        
 
         requirements = parser.requirements
         puts "Requirements: #{requirements.inspect}"
@@ -20,6 +21,9 @@ module LogicalRender
         client = LogicalRender::API::Client.new(
           base_url: "http://10.151.0.57:3000/api/v1/"
         )
+
+        # nodes_api = LogicalRender::API::Nodes.new(client)
+        # pp nodes_api.all(1)
 
         resolver = LogicalRender::DataResolver.new(
           requirements,
@@ -38,9 +42,6 @@ module LogicalRender
       rescue RuntimeError => e
         puts "Error: #{e.message}"
       end
-
-
-
 
     end
   end

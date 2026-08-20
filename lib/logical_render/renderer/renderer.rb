@@ -20,5 +20,13 @@ module LogicalRender
       ERB.new(@template).result(binding)
     end
 
+    def primary_genders(domain_id)
+      @data["primary_genders"]
+    end
+
+    def nodes(gender_id)
+      @data["nodes"]
+    end
+
   end
 end

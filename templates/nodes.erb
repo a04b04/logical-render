@@ -1,3 +1,7 @@
-<% assets.each do |banana| %>
-<%= banana.name %> - <%= banana.u_size %>U
+<% primary_genders(1).each do |gender| %>
+  <%= gender.id %> | <%= gender.name %>
+
+  <% nodes(gender.id).each do |node| %>
+    <%= node.name %>
+  <% end %>
 <% end %>
