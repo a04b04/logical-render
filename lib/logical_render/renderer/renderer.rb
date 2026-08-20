@@ -12,8 +12,6 @@ module LogicalRender
       primary_genders = @data["primary_genders"]
       sub_genders = @data["sub_genders"]
       domains = @data["domains"]
-      data = @data["data"]
-      data_fields = @data["data_fields"]
       gender_hierarchy = @data["gender_hierarchy"]
       assets = @data["assets"]
 

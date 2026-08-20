@@ -11,7 +11,7 @@ module LogicalRender
         template_contents = File.read(template)
 
         parser = LogicalRender::Parser::TemplateParser.new(template_contents)
-        # pp parser.ast
+         pp parser.ast
 
         
 

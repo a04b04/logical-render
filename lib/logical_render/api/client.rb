@@ -17,6 +17,8 @@ module LogicalRender
         end
         JSON.parse(response.body)
       end
+
+      
     end
   end
 end

@@ -5,8 +5,6 @@ module LogicalRender
     primary_genders
     sub_genders
     domains
-    data
-    data_fields
     assets].freeze
 
     def self.valid?(name)

@@ -3,11 +3,12 @@ module LogicalRender
     RESERVED = {
       "nodes" => %w[
         id
-        primary_gender_id
+        node_index
         name
-        data_id
-        index
-        uuid
+        gender_id
+        gender
+        sub_genders
+        data_fields
       ],
 
       "primary_genders" => %w[
@@ -30,21 +31,7 @@ module LogicalRender
         name
         data_id
       ],
-
-      "data" => %w[
-        id
-      ],
-
-      "data_fields" => %w[
-        id
-        data_id
-        name
-        identifier
-        type
-        value
-        deletable
-      ],
-
+      
       "assets" => %w[
         id
         name

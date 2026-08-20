@@ -24,7 +24,14 @@ module LogicalRender
       when "domains"
         LogicalRender::API::Domains.new(@client).all
       when "nodes"
-        fake_data["nodes"]
+        gender_id = requirement[:args].first
+
+        if gender_id.nil?
+          raise "nodes require a primary gender ID. Example: nodes(1)"
+        end
+        LogicalRender::API::Nodes
+        .new(@client)
+        .all(gender_id)
       when "primary_genders"
         domain_id = requirement[:args].first
 
