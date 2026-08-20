@@ -10,6 +10,7 @@ module LogicalRender
       def all(gender_id)
         response = @client.get("logical/genders/#{gender_id}/node/all")
 
+
         response.map do |node|
           OpenStruct.new(
             id: node["id"],

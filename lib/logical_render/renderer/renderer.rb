@@ -28,5 +28,9 @@ module LogicalRender
       @data["nodes"]
     end
 
+    def sub_genders(domain_id)
+      @data["sub_genders"]
+    end
+
   end
 end

@@ -32,7 +32,11 @@ module LogicalRender
         .new(@client)
         .all(domain_id)
       when "sub_genders"
-        fake_data["sub_genders"]
+        domain_id = requirement[:args].first
+
+        LogicalRender::API::SubGenders
+          .new(@client)
+          .all(domain_id)
       when "data"
         fake_data["data"]
       when "data_fields"
