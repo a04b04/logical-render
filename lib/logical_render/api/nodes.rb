@@ -10,7 +10,6 @@ module LogicalRender
       def all(gender_id)
         response = @client.get("logical/genders/#{gender_id}/node/all")
 
-
         response.map do |node|
           OpenStruct.new(
             id: node["id"],
@@ -19,7 +18,10 @@ module LogicalRender
             gender_id: node["genderId"],
             gender: node["gender"],
             sub_genders: node["subGenders"],
-            data_fields: node["dataFields"]
+            data_fields: node["dataFields"],
+            config: LogicalRender::Context::ConfigContext.new(
+              node["dataFields"]
+            )
           )
         end
       end
@@ -36,7 +38,10 @@ module LogicalRender
           gender_id: response["genderId"],
           gender: response["gender"],
           sub_genders: response["subGenders"],
-          data_fields: response["dataFields"]
+          data_fields: response["dataFields"],
+          config: LogicalRender::Context::ConfigContext.new(
+            response["dataFields"]
+          )
         )
       end
 
@@ -48,7 +53,10 @@ module LogicalRender
           primary_gender_id: response["primaryGenderId"],
           data_id: response["dataId"],
           name: response["name"],
-          data_fields: response["dataFields"]
+          data_fields: response["dataFields"],
+          config: LogicalRender::Context::ConfigContext.new(
+            response["dataFields"]
+          )
         )
       end
     end

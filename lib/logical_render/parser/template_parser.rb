@@ -127,7 +127,14 @@ module LogicalRender
             resource = loop[:resource]
             variable = loop[:variable]
 
-            if resource == "node"
+           context_resources = %w[
+              node
+              groups
+              domain
+              primary_gender
+            ]
+
+            if context_resources.include?(resource)
               block_body = ast_node[2][2]
               walk(block_body, scope, requirements)
               return

@@ -23,6 +23,11 @@ require_relative "logical_render/api/assets"
 require_relative "logical_render/render_context"
 require_relative "logical_render/resolver/context_resolver"
 
+require_relative "logical_render/context/config_context"
+
+require_relative "logical_render/context/group_context"
+require_relative "logical_render/context/groups_context"
+
 module LogicalRender
   module CLI
     extend Dry::CLI::Registry

@@ -29,7 +29,7 @@ module LogicalRender
 
         context = nil
 
-        if domain && node
+        if domain 
           context_resolver = LogicalRender::ContextResolver.new(client)
 
           context = context_resolver.resolve(
@@ -49,6 +49,7 @@ module LogicalRender
           data["domain"] = context[:domain]
           data["primary_gender"] = context[:primary_gender]
           data["current_node"] = context[:node]
+          data["groups"] = context[:groups]
         end
 
         renderer = LogicalRender::Renderer.new(
