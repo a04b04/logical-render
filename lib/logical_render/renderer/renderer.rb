@@ -8,12 +8,13 @@ module LogicalRender
     end
 
     def render
-      nodes = @data["nodes"]
+      node = @data["current_node"]
       primary_genders = @data["primary_genders"]
       sub_genders = @data["sub_genders"]
-      domains = @data["domains"]
+      domain = @data["domain"]
       gender_hierarchy = @data["gender_hierarchy"]
       assets = @data["assets"]
+      groups = @data["groups"]
 
       ERB.new(@template).result(binding)
     end

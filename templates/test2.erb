@@ -1,0 +1,9 @@
+# <%= domain.name %> hosts
+
+<% groups.nodes.nodes.each do |node| %>
+<%= node.config.ip_address %> <%= node.name %>
+<% end %>
+
+<% groups.gpu.nodes.each do |node| %>
+<%= node.config.ip_address %> <%= node.name %>
+<% end %>

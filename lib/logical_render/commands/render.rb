@@ -7,13 +7,18 @@ module LogicalRender
                required: true,
                desc: "Path to template file"
 
-      def call(template:, **)
+      option :domain,
+             type: :string,
+             desc: "Name of the cluster (domain name)"
+
+      option :node,
+             type: :string,
+             desc: "Node name"
+
+      def call(template:, domain: nil, node: nil, **)
         template_contents = File.read(template)
 
         parser = LogicalRender::Parser::TemplateParser.new(template_contents)
-         pp parser.ast
-
-        
 
         requirements = parser.requirements
         puts "Requirements: #{requirements.inspect}"
@@ -22,8 +27,16 @@ module LogicalRender
           base_url: "http://10.151.0.57:3000/api/v1/"
         )
 
-        # nodes_api = LogicalRender::API::Nodes.new(client)
-        # pp nodes_api.all(1)
+        context = nil
+
+        if domain 
+          context_resolver = LogicalRender::ContextResolver.new(client)
+
+          context = context_resolver.resolve(
+            domain_name: domain,
+            node_name: node
+          )
+        end
 
         resolver = LogicalRender::DataResolver.new(
           requirements,
@@ -31,6 +44,13 @@ module LogicalRender
         )
 
         data = resolver.resolve
+
+        if context
+          data["domain"] = context[:domain]
+          data["primary_gender"] = context[:primary_gender]
+          data["current_node"] = context[:node]
+          data["groups"] = context[:groups]
+        end
 
         renderer = LogicalRender::Renderer.new(
           template_contents,
@@ -42,7 +62,6 @@ module LogicalRender
       rescue RuntimeError => e
         puts "Error: #{e.message}"
       end
-
     end
   end
 end

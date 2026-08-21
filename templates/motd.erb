@@ -1,0 +1,18 @@
+================================================================================
+  <%= domain.name %>  (<%= node.config.domain %>)
+  Host    : <%= node.name %>  <%= node.config.ip_address %>
+  Primary : <%= node.gender %>  (index <%= node.node_index %>)
+  Genders : <%= ([node.gender] + node.sub_genders.map { |g| g["name"] }).join(", ") %>
+  DNS     : <%= node.config.dns_type %>
+  External: <%= node.config.externaldns %>
+================================================================================
+
+<% if node.config.slurm_nodelist && node.config.slurm_nodelist != "Optional" %>
+  This node is part of the configured Slurm node list.
+<% end %>
+
+Cluster name:
+  <%= node.config.cluster_name %>
+
+Munge key:
+  <%= node.config.slurm_mungekey %>

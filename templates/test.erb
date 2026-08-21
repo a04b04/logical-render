@@ -1,1 +1,3 @@
-<%primary_gender.name.add(ClusterName)%>
+<% assets.each do |asset| %>
+  <%= asset.name %> | <%= asset.u_size %> | <%= asset.u_top %> | <%= asset.u_bottom %>
+<% end %>
