@@ -127,6 +127,12 @@ module LogicalRender
             resource = loop[:resource]
             variable = loop[:variable]
 
+            if resource == "node"
+              block_body = ast_node[2][2]
+              walk(block_body, scope, requirements)
+              return
+            end
+
             unless LogicalRender::Resources.valid?(resource)
               raise "Unknown resource: #{resource}"
             end

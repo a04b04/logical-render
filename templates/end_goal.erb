@@ -1,0 +1,17 @@
+================================================================================
+  <%= alces.domain.config.cluster %>  (<%= alces.domain.config.domain %>)
+  Host    : <%= alces.node.name %>  <%= alces.node.config.networks.pri.ip %>
+  Primary : <%= alces.node.group.name %>  (index <%= alces.node.group.index %>)
+  Genders : <%= alces.node.genders.join(', ') %>
+  OS      : <%= alces.node.config.el9 ? 'EL9' : alces.node.config.el8 ? 'EL8' : 'unspecified' %>
+  VM      : <%= alces.node.config.is_vm %>
+================================================================================
+<% if alces.node.config.scheduler && alces.node.config.scheduler.is_server -%>
+  This node is the Slurm controller.
+<% end -%>
+<% if alces.node.config.ipa && alces.node.config.ipa.servername == alces.node.name -%>
+  This node is the IPA server (<%= alces.node.config.ipa.serverip %>).
+<% end -%>
+<% if alces.node.config.nfs && alces.node.config.nfs.is_server -%>
+  This node is an NFS server.
+<% end -%>

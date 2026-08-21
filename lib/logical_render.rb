@@ -19,7 +19,9 @@ require_relative "logical_render/api/nodes"
 require_relative "logical_render/api/primary_genders"
 require_relative "logical_render/api/sub_genders"
 require_relative "logical_render/api/assets"
-require_relative "logical_render/api/data_fields"
+
+require_relative "logical_render/render_context"
+require_relative "logical_render/resolver/context_resolver"
 
 module LogicalRender
   module CLI

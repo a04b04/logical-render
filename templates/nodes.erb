@@ -1,7 +1,0 @@
-<% primary_genders(1).each do |gender| %>
-  <%= gender.id %> | <%= gender.name %>
-
-  <% nodes(gender.id).each do |node| %>
-    <%= node.name %>
-  <% end %>
-<% end %>

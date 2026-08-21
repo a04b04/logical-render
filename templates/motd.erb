@@ -1,0 +1,19 @@
+Options fetched below
+
+
+
+Node: <%= node.name %>
+Primary Gender: <%= node.gender %>
+Node Index: <%= node.node_index %>
+
+Sub Genders:
+<% node.sub_genders.each do |sub_gender| %>
+  <%= sub_gender["name"] %>
+<% end %>
+
+Data Fields:
+<% node.data_fields.each do |field| %>
+  <%= field["name"] %>: <%= field["value"] %>
+<% end %>
+
+        
